@@ -1,0 +1,72 @@
+Datos:
+
+https://console.cloud.google.com/storage/browser/securitas
+
+
+Tenemos loa datos de la natalidad de los EEUU desde 1969 hasta 2010(aproximadamente)
+
+Datos de entrada: 
+
+ - 69 ficheros de 32 Mb con el puntero natalidad*, donde está la información de la natalidad.
+ Esquema: 
+Nombre del campo	Tipo	Modo	Descripción
+source_year	INTEGER	REQUIRED	Four-digit year of the birth. Example: 1975.
+year	INTEGER	NULLABLE	Four-digit year of the birth. Example: 1975.
+month	INTEGER	NULLABLE	Month index of the date of birth, where 1=January.
+day	INTEGER	NULLABLE	Day of birth, starting from 1.
+wday	INTEGER	NULLABLE	Day of the week, where 1 is Sunday and 7 is Saturday.
+state	STRING	NULLABLE	The two character postal code for the state. Entries after 2004 do not include this value.
+is_male	BOOLEAN	REQUIRED	TRUE if the child is male, FALSE if female.
+child_race	INTEGER	NULLABLE	The race of the child. One of the following numbers: 1 - White 2 - Black 3 - American Indian 4 - Chinese 5 - Japanese 6 - Hawaiian 7 - Filipino 9 - Unknown/Other 18 - Asian Indian 28 - Korean 39 - Samoan 48 - Vietnamese
+weight_pounds	FLOAT	NULLABLE	Weight of the child, in pounds.
+plurality	INTEGER	NULLABLE	How many children were born as a result of this pregnancy. twins=2, triplets=3, and so on.
+apgar_1min	INTEGER	NULLABLE	Apgar scores measure the health of a newborn child on a scale from 0-10. Value after 1 minute. Available from 1978-2002.
+apgar_5min	INTEGER	NULLABLE	Apgar scores measure the health of a newborn child on a scale from 0-10. Value after 5 minutes. Available from 1978-2002.
+mother_residence_state	STRING	NULLABLE	The two-letter postal code of the mother's state of residence when the child was born.
+mother_race	INTEGER	NULLABLE	Race of the mother. Same values as child_race.
+mother_age	INTEGER	NULLABLE	Reported age of the mother when giving birth.
+gestation_weeks	INTEGER	NULLABLE	The number of weeks of the pregnancy.
+lmp	STRING	NULLABLE	Date of the last menstrual period in the format MMDDYYYY. Unknown values are recorded as "99" or "9999".
+mother_married	BOOLEAN	NULLABLE	True if the mother was married when she gave birth.
+mother_birth_state	STRING	NULLABLE	The two-letter postal code of the mother's birth state.
+cigarette_use	BOOLEAN	NULLABLE	True if the mother smoked cigarettes. Available starting 2003.
+cigarettes_per_day	INTEGER	NULLABLE	Number of cigarettes smoked by the mother per day. Available starting 2003.
+alcohol_use	BOOLEAN	NULLABLE	True if the mother used alcohol. Available starting 1989.
+drinks_per_week	INTEGER	NULLABLE	Number of drinks per week consumed by the mother. Available starting 1989.
+weight_gain_pounds	INTEGER	NULLABLE	Number of pounds gained by the mother during pregnancy.
+born_alive_alive	INTEGER	NULLABLE	Number of children previously born to the mother who are now living.
+born_alive_dead	INTEGER	NULLABLE	Number of children previously born to the mother who are now dead.
+born_dead	INTEGER	NULLABLE	Number of children who were born dead (i.e. miscarriages)
+ever_born	INTEGER	NULLABLE	Total number of children to whom the woman has ever given birth (includes the current birth).
+father_race	INTEGER	NULLABLE	Race of the father. Same values as child_race.
+father_age	INTEGER	NULLABLE	Age of the father when the child was born.
+record_weight	INTEGER	NULLABLE	1 or 2, where 1 is a row from a full-reporting area, and 2 is a row from a 50% sample area.
+
+- Fichero con las dimensiones de raza (race.csv) 
+Esquema:
+Nombre del campo	Tipo	Modo	Descripción
+id_race	INTEGER	NULLABLE	
+race	STRING	NULLABLE	
+- Fichero con las dimensiones de sexo (sex.csv)
+Esquema:
+Nombre del campo	Tipo	Modo	Descripción
+id_sex	BOOLEAN	NULLABLE	
+de_sex	STRING	NULLABLE	
+- La info está en este bucket ṕublico: https://console.cloud.google.com/storage/browser/securitas
+
+
+Datos de salida:
+El objetivo es un fichero que contenga la siguiente información:
+Estado (string)
+B70: Nacimientos en la decada los 70 en ese estado (number)
+B80: Nacimientos en la decada los 80 en ese estado (number)
+B90: Nacimientos en la decada los 90 en ese estado (number)
+B00: Nacimientos en la decada los 2000 en ese estado (number)
+Race70: Raza con mayor número de nacimientos en la decada de los 70 en ese estado (string)
+Race80: Raza con mayor número de nacimientos en la decada de los 80 en ese estado (string)
+Race90: Raza con mayor número de nacimientos en la decada de los 90 en ese estado(string)
+Race00: Raza con mayor número de nacimientos en la decada de los 2000 en ese estado (string)
+Male: Numero de nacimientos de hombres en los desde el 70 al 2010 (number)
+Female: Numero de nacimientos de hombres en los desde el 70 al 2010 (number)
+Weight: peso medio en kilos de todos los niños nacidos en ese estado desde el 70 al 2010 (float)
+Formato: .csv

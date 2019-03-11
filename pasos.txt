@@ -1,0 +1,10 @@
+Comunes:
+	Comprobar calidad columnas:
+		- source_year: esta en principio debería venir siempre informada
+		- year: podría ser null
+		- state:
+
+BASH:
+	- crear carpeta de datos
+	- paralelizar descarga de datos
+	- 
