@@ -11,6 +11,7 @@ bash:
 
 R:
 	- cargar el fichero completo con ff
+	- a ocntinuación usar dplyr para el resto de cálculos
 	- eliminar columnas no usadas, solo me quedo con source_year, state, is_male, child_race, weight_pounds (convertir a kgs la media o todos, lo que tarde menos)
 	- generar dataframes por estado
 	- generar dataframes por estado/década
