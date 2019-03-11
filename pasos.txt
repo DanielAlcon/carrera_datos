@@ -4,7 +4,17 @@ Comunes:
 		- year: podría ser null
 		- state:
 
-BASH:
-	- crear carpeta de datos
+bash:
+	- comprobar que tenemos las carpetas
 	- paralelizar descarga de datos
-	- 
+	- opcional: generar 1 solo csv
+
+R:
+	- cargar el fichero completo con ff
+	- eliminar columnas no usadas, solo me quedo con source_year, state, is_male, child_race, weight_pounds (convertir a kgs la media o todos, lo que tarde menos)
+	- generar dataframes por estado
+	- generar dataframes por estado/década
+	- Contar nacimientos (filas) por cada df
+	- contar nacimientos por sexo
+	- contar nacimientos por razas en cada estado
+	- media de peso (libras) -> kilos
