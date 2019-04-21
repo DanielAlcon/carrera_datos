@@ -13,11 +13,11 @@ install.packages("data.table")
 
 #hacer benchmark de lo que tarda: system.time(comando)
 # TODO: cambiar directorior de trabajo a donde se encuentren los ficheros
-setwd("~/Repositorios/Github/carrera_datos/data")
+setwd("./data")
 #create a vector of the files that I want to load
 temp = list.files(pattern="natalidad*")
-race = read.csv("./data/race.csv", header = T, sep = ",")
-sex = read.csv("./data/sex.csv", header = T, sep = ",")
+race = read.csv("./race.csv", header = T, sep = ",")
+sex = read.csv("./sex.csv", header = T, sep = ",")
 #leer solo las columnas necesarias
 # columnas: source_year | state | is_male | child_race | weight_pounds
 
@@ -25,19 +25,29 @@ library(data.table)
 # system.time(
 data_total = rbindlist(lapply(list.files(path=".", pattern="natalidad*"), data.table::fread , header = T, verbose = T, sep = ',', select = c("source_year", "state", "is_male", "child_race", "weight_pounds")))
 
-B70 = data_total[source_year %between% c(1970,1979), .N, keyby = state]
-B80 = data_total[source_year %between% c(1980,1989), .N, keyby = state]
-B90 = data_total[source_year %between% c(1990,1999), .N, keyby = state]
-B00 = data_total[source_year %between% c(2000,2010), .N, keyby = state]
-Race70: Raza con mayor número de nacimientos en la decada de los 70 en ese estado (string)
-Race80: Raza con mayor número de nacimientos en la decada de los 80 en ese estado (string)
-Race90: Raza con mayor número de nacimientos en la decada de los 90 en ese estado(string)
-Race00: Raza con mayor número de nacimientos en la decada de los 2000 en ese estado (string)
-Male: Numero de nacimientos de hombres en los desde el 70 al 2010 (number)
-Female: Numero de nacimientos de hombres en los desde el 70 al 2010 (number)
-Weight: peso medio en kilos de todos los niños nacidos en ese estado desde el 70 al 2010 (float)
-tabla_final = Unir columnas en un data.table para pasar a csv
+# Total nacimientos por décadas y estado
+b70 = setnames(data_total[source_year %between% c(1970,1979), .N, keyby = state],"N","b70")
+b80 = setnames(data_total[source_year %between% c(1980,1989), .N, keyby = state],"N","b80")
+b90 = setnames(data_total[source_year %between% c(1990,1999), .N, keyby = state],"N","b90")
+b00 = setnames(data_total[source_year %between% c(2000,2010), .N, keyby = state],"N","b00")
 
+# Raza con mayor nacimiento por década y estado
+r70 = data_total[source_year %between% c(1970,1979), .(r70=max(child_race)), keyby = state]
+r80 = data_total[source_year %between% c(1980,1989), .(r80=max(child_race)), keyby = state]
+r90 = data_total[source_year %between% c(1990,1999), .(r90=max(child_race)), keyby = state]
+r00 = data_total[source_year %between% c(2000,2010), .(r00=max(child_race)), keyby = state]
+
+# Total nacimientos por sexo y estado
+male = data_total[source_year %between% c(1970,2010), .(male=sum(is_male==TRUE)), keyby = state]
+female = data_total[source_year %between% c(1970,2010), .(female=sum(is_male==FALSE)), keyby = state]
+
+# Pesos medios por estado
+Weight: peso medio en kilos de todos los niños nacidos en ese estado desde el 70 al 2010 (float)
+weight_no_NA = data_total[source_year %between% c(1970,2010), .(weight_no_NA=weight_pounds!='NA'), keyby = state]
+avg_weight = data_total[source_year %between% c(1970,2010), .(avg_weight=mean(weight_pounds!='NA')), keyby = state]
+
+tabla_final = Unir columnas en un data.table para pasar a csv
+dt = data.table(B70,B80[,'B80'], etc..)
 # Guardar en CSV
 fwrite(tabla_final, "tabla_final.csv")
 # conteo de nacimientos sin agrupar por estado, usando funciones core de R
