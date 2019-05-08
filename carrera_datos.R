@@ -43,7 +43,9 @@ female = data_total[source_year %between% c(1970,2010), .(female=sum(is_male==FA
 
 # Pesos medios por estado
 Weight: peso medio en kilos de todos los niños nacidos en ese estado desde el 70 al 2010 (float)
-weight_no_NA = data_total[source_year %between% c(1970,2010), .(weight_no_NA=weight_pounds!='NA'), keyby = state]
+remove NA rows
+weight_no_NA = data_total[source_year %between% c(1970,2010), .(weight_no_NA=subset(data_total$weight_pounds, data_total$weight_pounds != is.na(data_total$weight_pounds))), keyby = 
+                            state]
 avg_weight = data_total[source_year %between% c(1970,2010), .(avg_weight=mean(weight_pounds!='NA')), keyby = state]
 
 tabla_final = Unir columnas en un data.table para pasar a csv
