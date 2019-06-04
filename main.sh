@@ -1,0 +1,1 @@
+Rscript --vanilla carrera_datos.R
