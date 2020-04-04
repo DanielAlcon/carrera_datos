@@ -3,7 +3,7 @@ require("data.table")
 require(parallel)
 #library(data.table)
 
-setwd("./data")
+setwd("/data")
 
 temp = list.files(pattern="natalidad*")
 # race = read.csv("./race.csv", header = T, sep = ",")
